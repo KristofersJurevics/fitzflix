@@ -1418,9 +1418,14 @@ class FileAudioTrack(db.Model):
         if (
             self.compression_mode == "Lossless"
             and self.bit_depth
-            and self.sampling_rate_khz
+            and (self.sampling_rate or self.sampling_rate_khz)
         ):
-            return f"{self.bit_depth}-bit {self.sampling_rate_khz} kHz"
+            sampling_rate_khz = (
+                self.sampling_rate / 1000
+                if self.sampling_rate
+                else self.sampling_rate_khz
+            )
+            return f"{self.bit_depth}-bit {sampling_rate_khz:g} kHz"
         if self.bitrate_kbps:
             return f"{self.bitrate_kbps} kbps"
         return None

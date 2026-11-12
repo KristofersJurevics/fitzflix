@@ -256,13 +256,14 @@ def test_the_track_labels(app):
         channels="8",
         compression_mode="Lossless",
         bit_depth=24,
+        sampling_rate=44100,
         sampling_rate_khz=48,
     )
     lossy = FileAudioTrack(
         language_name="French", codec="AC-3", channels="6", bitrate_kbps=640
     )
     bare = FileAudioTrack(language_name="Latin", codec="PCM", channels="2")
-    assert lossless.label == "English: TrueHD 8 (24-bit 48 kHz)"
+    assert lossless.label == "English: TrueHD 8 (24-bit 44.1 kHz)"
     assert lossy.label == "French: AC-3 6 (640 kbps)"
     assert bare.label == "Latin: PCM 2" and bare.quality_label is None
     subtitle = FileSubtitleTrack(elements=1200, language_name="English")
